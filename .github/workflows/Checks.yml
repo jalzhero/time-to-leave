@@ -21,19 +21,9 @@ jobs:
           # TODO: need to download driver according to electron's version
           wget --directory-prefix=/tmp https://chromedriver.storage.googleapis.com/87.0.4280.20/chromedriver_linux64.zip
           unzip -d /tmp/chromedriver /tmp/chromedriver_linux64.zip
+          sudo chmod +x /tmp/chromedriver/chromedriver
           /tmp/chromedriver/chromedriver &
           sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 &
-      - name: Setup Selenium (macOS)
-        if: matrix.os == 'macos-latest'
-        run: |
-          brew update
-          brew tap homebrew/cask
-          brew cask install chromedriver
-          brew cask install google-chrome
-          which chromedriver
-          sudo spctl --master-disable
-          chromedriver -v
-        shell: bash {0}
       - name: '        Tests'
         shell: bash
         env:
